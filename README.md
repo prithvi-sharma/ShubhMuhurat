@@ -24,13 +24,17 @@ Choghadiya is an ancient Vedic timekeeping system in Indian astrology that divid
 ## How to use
 1. Open the site
 2. Optionally : Choose Light/Dark mode by clicking on Sun/Moon
-3. Select a date (Default : Today)
-4. If available, set your location for precise timezone so sunrise/sunset calculations are accurate
-5. Read the list/timeline of Choghadiya blocks for the day. Favorable blocks are highlighted for quick scanning
-6. Pick the best time for your event — plan confidently!
+3. Choose Activity : Work Related / General Time / Money Related
+4. Choose Period : Day / Night
+5. Select a date : Default is today
+6. Enter your city/state/country name for precise timezone so sunrise/sunset calculations are accurate
+   </br><strong>NOTE</strong> : <i>Website DOES NOT track your location or timezone. Hence, default is Mumbai.</i>
+7. Click on "Find Auspicious Time"
+8. Read the list/timeline of Choghadiya blocks for the day. Favorable blocks are highlighted for quick scanning.
+9. Pick the best time for your event — plan confidently!
 
 Notes:
-- Choghadiya depends on sunrise and sunset times, so accuracy improves with correct timezone/location input
+- Choghadiya depends on sunrise and sunset times, so accuracy improves with correct timezone/location input.
 - Use it as a helpful guide rather than an absolute rule
 - Always remember, best time is when YOU start!
 
