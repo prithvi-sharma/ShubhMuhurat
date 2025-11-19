@@ -3,7 +3,7 @@
 
 <img src="/assets/shubhmuhurat_readme.JPG" width="100%">
 
-Find your auspicious moments, care free ❤️
+Discover your auspicious moments, care free ❤️
 
 ShubhMuhurat is a simple, privacy-first webpage that helps you quickly find auspicious times using the ancient Vedic Choghadiya system.
 
