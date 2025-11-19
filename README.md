@@ -1,5 +1,5 @@
 # ShubhMuhurat
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+![Version Badge](https://img.shields.io/badge/version-v1.2-green) [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
 <img src="/assets/shubhmuhurat_readme.JPG" width="100%">
 
