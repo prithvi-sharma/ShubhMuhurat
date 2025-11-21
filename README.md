@@ -1,5 +1,5 @@
 # ShubhMuhurat
-![Version Badge](https://img.shields.io/badge/version-v1.2-green) [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+![Version Badge](https://img.shields.io/badge/version-v1.2-blue.svg) [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
 <img src="/assets/shubhmuhurat_readme.JPG" width="100%">
 
@@ -19,7 +19,7 @@ ShubhMuhurat is a simple, privacy-first webpage that helps you quickly find ausp
 This project is intended as a small, caring tool to help people find answers without strings attached.
 
 ## What is Choghadiya?
-Choghadiya is an ancient Vedic timekeeping system in Indian astrology that divides the day into segments of approximately 1.5 hours each, used to determine auspicious times for important activities. It consists of both favorable and unfavorable periods, helping individuals choose the best times for events.
+Choghadiya is an ancient Vedic timekeeping system in Indian astrology that divides the day into segments of approximately 90 mins each, used to determine auspicious times for important activities. It consists of both favorable and unfavorable periods, helping individuals choose the best times for events.
 
 ## How to use
 1. Open the site
