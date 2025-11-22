@@ -38,6 +38,9 @@ Notes:
 - Use it as a helpful guide rather than an absolute rule
 - Always remember, best time is when YOU start!
 
-Let me know what you think — if you wanna discuss about this, always keen : mail@prithvisharma.com
+## Update Ideas 💡
+- <strong>Auto Light/Dark Mode</strong> : <i>Consideration Phase</i>
+
+Let me know what you think — if you have any ideas for features, always keen : mail@prithvisharma.com
 
 Thanks for reading. See ya o/
