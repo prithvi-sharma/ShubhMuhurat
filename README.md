@@ -39,7 +39,10 @@ Notes:
 - Always remember, best time is when YOU start!
 
 ## Update Ideas 💡
-- <strong>Auto Light/Dark Mode</strong> : <i>Consideration Phase</i>
+- <strong>Sunrise/Sunset Time Override</strong> : Allow manual sunrise/sunset override for special cases.<br>
+<i>(Credit: Idea suggested by Samarth Shahu)</i>
+- <strong>Auto Light/Dark Mode</strong> : Auto-mode selection based on browser preference.<br>
+<i>(Credit: Idea suggested by Priyanka Sharma)</i>
 
 Let me know what you think — if you have any ideas for features, always keen : mail@prithvisharma.com
 
