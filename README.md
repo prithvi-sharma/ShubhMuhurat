@@ -38,8 +38,8 @@ Notes:
 - Use it as a helpful guide rather than an absolute rule
 - Always remember, best time is when YOU start!
 
-## Live Bugs 🐞
-1. 96 min period inconsistency: <i>Being fixed<i/>
+## Live Bugs 🐞 :
+<i>NULL</i>  
 
 ## Update Ideas 💡
 1. <strong>Sunrise/Sunset Time Override</strong> : Allow manual sunrise/sunset override for special cases.<br>
