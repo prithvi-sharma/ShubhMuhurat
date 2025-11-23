@@ -38,10 +38,13 @@ Notes:
 - Use it as a helpful guide rather than an absolute rule
 - Always remember, best time is when YOU start!
 
+## Live Bugs 🐞
+1. 96 min period inconsistency: <i>Being fixed<i/>
+
 ## Update Ideas 💡
-- <strong>Sunrise/Sunset Time Override</strong> : Allow manual sunrise/sunset override for special cases.<br>
+1. <strong>Sunrise/Sunset Time Override</strong> : Allow manual sunrise/sunset override for special cases.<br>
 <i>(Credit: Idea suggested by Samarth Shahu)</i>
-- <strong>Auto Light/Dark Mode</strong> : Auto-mode selection based on browser preference.<br>
+2. <strong>Auto Light/Dark Mode</strong> : Auto-mode selection based on browser preference.<br>
 <i>(Credit: Idea suggested by Priyanka Sharma)</i>
 
 Let me know what you think — if you have any ideas for features, always keen : mail@prithvisharma.com
