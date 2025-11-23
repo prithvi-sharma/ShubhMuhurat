@@ -38,7 +38,7 @@ Notes:
 - Use it as a helpful guide rather than an absolute rule
 - Always remember, best time is when YOU start!
 
-## Live Bugs 🐞 :
+## Live Bugs 🐞
 <i>NULL</i>  
 
 ## Update Ideas 💡
