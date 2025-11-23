@@ -46,6 +46,7 @@ Notes:
 🔴Live v1.3.1 Beta - Test.html <i>(Credit: Idea suggested by Priyanka Sharma)</i>
 2. <strong>Sunrise/Sunset Time Override</strong> : Allow manual sunrise/sunset override for special cases.<br>
 <i>(Credit: Idea suggested by Samarth Shahu)</i>
+3. <strong>Chart Image/PDF Download</strong> : Allows the user to download chart.<br>
 
 Let me know what you think — if you have any ideas for features, always keen : mail@prithvisharma.com
 
