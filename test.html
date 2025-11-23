@@ -456,7 +456,7 @@ const getChoghadiyaStyle = (name, activity) => {
 
             // Populate Years
             const currYear = new Date().getFullYear();
-            for (let y = currYear - 75; y <= currYear + 75; y++) {
+            for (let y = currYear - 50; y <= currYear + 50; y++) {
                 const div = document.createElement('div');
                 div.className = 'scroller-item';
                 div.textContent = y;
@@ -477,10 +477,10 @@ const getChoghadiyaStyle = (name, activity) => {
 
             // Setup Days dynamic population
             const updateDays = () => {
-                const yIndex = Math.round(yearsCol.scrollTop / 75);
+                const yIndex = Math.round(yearsCol.scrollTop / 50);
                 const mIndex = Math.round(monthsCol.scrollTop / 50);
                 
-                const yearVal = currYear - 75 + yIndex;
+                const yearVal = currYear - 50 + yIndex;
                 const monthVal = mIndex + 1; // 1-based
                 
                 const daysInMonth = new Date(yearVal, monthVal, 0).getDate();
@@ -502,11 +502,11 @@ const getChoghadiyaStyle = (name, activity) => {
             };
 
             const updateStateDate = () => {
-                const yIndex = Math.round(yearsCol.scrollTop / 75);
+                const yIndex = Math.round(yearsCol.scrollTop / 50);
                 const mIndex = Math.round(monthsCol.scrollTop / 50);
                 const dIndex = Math.round(daysCol.scrollTop / 50);
 
-                const yearVal = currYear - 75 + yIndex;
+                const yearVal = currYear - 50 + yIndex;
                 const dayVal = dIndex + 1; // 1-based
 
                 const newDate = new Date(yearVal, mIndex, dayVal);
@@ -529,7 +529,7 @@ const getChoghadiyaStyle = (name, activity) => {
             updateDays();
             
             // Set Initial View to Today
-            scrollTo(yearsCol, 75); // Middle of 150 years, someone told me to increase it, yeah sure buddy!
+            scrollTo(yearsCol, 50); // Middle of 100 years
             scrollTo(monthsCol, today.getMonth());
             scrollTo(daysCol, today.getDate() - 1);
             // Need to run updateDays again after scrolling to ensure correct day count
