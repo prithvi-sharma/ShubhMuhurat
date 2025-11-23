@@ -1,5 +1,5 @@
 # ShubhMuhurat
-![Version Badge](https://img.shields.io/badge/version-v1.2-blue.svg) [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+![Version Badge](https://img.shields.io/badge/Stable-v1.2-blue.svg) ![Version Badge](https://img.shields.io/badge/Beta-v1.3.1-red.svg) [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
 <img src="/assets/shubhmuhurat_readme.JPG" width="100%">
 
@@ -38,14 +38,14 @@ Notes:
 - Use it as a helpful guide rather than an absolute rule
 - Always remember, best time is when YOU start!
 
-## Live Bugs 🐞
-<i>NULL</i>  
+## Bugs 🐞
+1. Default year showing 2050 - 🟢Backtracked & Pacthed v1.2 
 
 ## Update Ideas 💡
-1. <strong>Sunrise/Sunset Time Override</strong> : Allow manual sunrise/sunset override for special cases.<br>
+1. <strong>Auto Light/Dark Mode</strong> : Auto-mode selection based on browser preference.<br>
+🔴Live v1.3.1 Beta - Test.html <i>(Credit: Idea suggested by Priyanka Sharma)</i>
+2. <strong>Sunrise/Sunset Time Override</strong> : Allow manual sunrise/sunset override for special cases.<br>
 <i>(Credit: Idea suggested by Samarth Shahu)</i>
-2. <strong>Auto Light/Dark Mode</strong> : Auto-mode selection based on browser preference.<br>
-<i>(Credit: Idea suggested by Priyanka Sharma)</i>
 
 Let me know what you think — if you have any ideas for features, always keen : mail@prithvisharma.com
 
