@@ -26,6 +26,12 @@
             }
         }
     </script>
+    <script>
+        // Apply theme immediately to prevent flash of wrong color
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            document.documentElement.classList.add('dark');
+        }
+    </script>
     <style>
         body { font-family: 'Poppins', sans-serif; }
 
@@ -620,12 +626,14 @@ const getChoghadiyaStyle = (name, activity) => {
             // Init
             initScroller();
             updateUIToggles();
-            toggleDarkMode('light'); // Default
+            
+            // Initialize theme from DOM state (set by head script)
+            const initialTheme = document.documentElement.classList.contains('dark') ? 'dark' : 'light';
+            toggleDarkMode(initialTheme);
         }
 
         // Run Immediately
         initApp();
     </script>
-<script type="module" src="/index.tsx"></script>
 </body>
 </html>
