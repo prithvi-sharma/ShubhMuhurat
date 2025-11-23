@@ -523,7 +523,7 @@ const getChoghadiyaStyle = (name, activity) => {
             updateDays();
             
             // Set Initial View to Today
-            scrollTo(yearsCol, 50); // Middle of 100 years
+            scrollTo(yearsCol, 75); // Middle of 150 years, someone told me to increase it, yeah sure buddy!
             scrollTo(monthsCol, today.getMonth());
             scrollTo(daysCol, today.getDate() - 1);
             // Need to run updateDays again after scrolling to ensure correct day count
