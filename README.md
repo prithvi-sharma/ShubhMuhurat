@@ -44,7 +44,8 @@ Notes:
 ## Update Ideas 💡
 1. <strong>Auto Light/Dark Mode</strong> : Auto-mode selection based on browser preference. <i>(Credit: Priyanka Sharma)</i><br>
 🟢 Live [v1.3.1](https://ShubhMuhurat.PrithviSharma.com)
-2. <strong>Sunrise/Sunset Time Override</strong> : Allow manual sunrise/sunset override for special cases. <i>(Credit: Samarth Shahu)</i>
+2. <strong>Sunrise/Sunset Time Override</strong> : Allow manual sunrise/sunset override for special cases. <i>(Credit: Samarth Shahu)</i><br>
+🔴 Live [v1.3.2 Beta](https://ShubhMuhurat.PrithviSharma.com/test.html)
 3. <strong>Chart Image/PDF Download</strong> : Allows the user to download chart.
 4. <strong>Live Mahurat Visual</strong> : Shows which period is Live based on time. <i>(Credit: Priyanka Sharma)</i>
 
