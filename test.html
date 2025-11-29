@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Shubh Muhurat</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    animation: {
+                        'spin-slow': 'spin 8s linear infinite',
+                        'fade-in': 'fadeIn 0.5s ease-in-out',
+                        'slide-up': 'slideUp 0.5s cubic-bezier(0.2, 0.8, 0.2, 1)',
+                    },
+                    keyframes: {
+                        fadeIn: { '0%': { opacity: '0' }, '100%': { opacity: '1' } },
+                        slideUp: { '0%': { opacity: '0', transform: 'translateY(20px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } }
+                    }
+                }
+            }
+        }
+    </script>
+    <script>
+        // Apply theme immediately to prevent flash of wrong color
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            document.documentElement.classList.add('dark');
+        }
+    </script>
+    <style>
+        body { font-family: 'Poppins', sans-serif; }
+
+        .glass {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        .dark .glass {
+            background: rgba(30, 41, 59, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* Date Scroller */
+        .date-scroller {
+            display: flex;
+            justify-content: space-around;
+            height: 160px;
+            overflow: hidden;
+            -webkit-mask-image: linear-gradient(to bottom, transparent, black 20%, black 80%, transparent);
+            mask-image: linear-gradient(to bottom, transparent, black 20%, black 80%, transparent);
+            background-color: rgba(248, 250, 252, 0.5);
+            border-radius: 1rem;
+            border: 1px solid rgba(203, 213, 225, 0.5);
+        }
+        .dark .date-scroller {
+            background-color: rgba(15, 23, 42, 0.5);
+            border-color: rgba(51, 65, 85, 0.5);
+        }
+
+        .scroller-column {
+            overflow-y: scroll;
+            scroll-snap-type: y mandatory;
+            flex: 1;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+            padding-top: 55px;
+            padding-bottom: 55px;
+        }
+        .scroller-column::-webkit-scrollbar { display: none; }
+
+        .scroller-item {
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: #64748b;
+            scroll-snap-align: center;
+            cursor: pointer;
+        }
+        .dark .scroller-item { color: #94a3b8; }
+
+        .selection-indicator {
+            position: absolute;
+            top: 50%;
+            left: 10px;
+            right: 10px;
+            transform: translateY(-50%);
+            height: 50px;
+            background: rgba(99, 102, 241, 0.1);
+            border-radius: 12px;
+            pointer-events: none;
+            border: 1px solid rgba(99, 102, 241, 0.2);
+        }
+
+        /* Selected Toggle State */
+        .toggle-selected {
+            background-color: white;
+            color: #4f46e5; /* indigo-600 */
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            transform: scale(1.02);
+        }
+        .dark .toggle-selected {
+            background-color: #475569; /* slate-600 */
+            color: #a5b4fc; /* indigo-300 */
+        }
+    </style>
+<link rel="stylesheet" href="/index.css">
+</head>
+<body class="bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 transition-colors duration-500 min-h-screen flex flex-col">
+
+	<!-- Loading Screen -->
+	<div id="splash-screen" class="fixed inset-0 bg-slate-50 dark:bg-slate-950 flex flex-col items-center justify-center z-50 transition-opacity duration-500 p-4">
+		<div class="flex space-x-6 mb-6">
+			<svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-yellow-500 animate-spin-slow" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+			</svg>
+		</div>
+		<h1 class="text-4xl sm:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 to-purple-600 mb-6 text-center max-w-full truncate">ShubhMuhurat</h1>
+		<div class="flex space-x-2">
+			<div class="w-3 h-3 bg-indigo-500 rounded-full animate-bounce" style="animation-delay: -0.3s"></div>
+			<div class="w-3 h-3 bg-purple-500 rounded-full animate-bounce" style="animation-delay: -0.15s"></div>
+			<div class="w-3 h-3 bg-pink-500 rounded-full animate-bounce"></div>
+		</div>
+	</div>
+
+
+    <main class="flex-grow w-full max-w-3xl mx-auto p-4 sm:p-6 opacity-0 transition-opacity duration-700" id="main-content">
+        
+        <!-- Header -->
+        <header class="text-center mt-6 mb-10">
+            <div class="flex justify-center items-center space-x-8 mb-6">
+                <button id="btn-sun" class="transform transition-all duration-500 hover:scale-110">
+					<img src="assets/sun.png" alt="Sun" class="h-12 w-10 object-cover""/>
+                    <!-- <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-yellow-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                    </svg> -->
+                </button>
+				<button id="btn-moon" class="transform transition-all duration-500 hover:scale-110" style="box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3); border-radius: 50%;">
+					<img src="assets/moon.png" alt="Full Moon" class="h-10 w-10 object-cover" />
+				</button>
+            </div>
+            <h1 class="text-4xl sm:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600 pb-2">
+                ShubhMuhurat
+            </h1>
+            <p class="text-slate-500 dark:text-slate-400 text-lg">Discover your auspicious moments ❤️</p>
+        </header>
+
+        <!-- Controls Card -->
+        <div class="glass rounded-3xl p-6 sm:p-8 shadow-xl mb-8">
+            <div class="grid gap-6">
+                
+                <!-- Activity -->
+                <div class="space-y-2">
+                    <label class="text-sm font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Activity</label>
+                    <div class="flex w-full bg-slate-200 dark:bg-slate-700 rounded-xl p-1.5 shadow-inner" id="activity-group">
+                        <button class="toggle-btn flex-1 py-3 px-2 text-sm font-bold rounded-lg transition-all duration-300" data-val="Work Related">Work Related</button>
+                        <button class="toggle-btn flex-1 py-3 px-2 text-sm font-bold rounded-lg transition-all duration-300" data-val="General Time">General Time</button>
+                        <button class="toggle-btn flex-1 py-3 px-2 text-sm font-bold rounded-lg transition-all duration-300" data-val="Money Related">Money Related</button>
+                    </div>
+                </div>
+
+                <!-- Period -->
+                <div class="space-y-2">
+                    <label class="text-sm font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Period</label>
+                    <div class="flex w-full bg-slate-200 dark:bg-slate-700 rounded-xl p-1.5 shadow-inner" id="period-group">
+                        <button class="toggle-btn flex-1 py-3 px-2 text-sm font-bold rounded-lg transition-all duration-300" data-val="Day">Day</button>
+                        <button class="toggle-btn flex-1 py-3 px-2 text-sm font-bold rounded-lg transition-all duration-300" data-val="Night">Night</button>
+                    </div>
+                </div>
+
+                <!-- Date Scroller -->
+                <div class="space-y-2">
+                    <label class="text-sm font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Date</label>
+                    <div class="date-scroller relative">
+                        <div class="selection-indicator"></div>
+                        <div id="scroll-month" class="scroller-column"></div>
+                        <div id="scroll-day" class="scroller-column"></div>
+                        <div id="scroll-year" class="scroller-column"></div>
+                    </div>
+                </div>
+
+                <!-- Location -->
+                <div class="space-y-2">
+                    <label class="text-sm font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Location</label>
+                    <input 
+                        type="text" 
+                        id="input-location"
+                        class="w-full p-4 bg-slate-100 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-800 dark:text-white focus:ring-2 focus:ring-indigo-500 outline-none transition-all"
+                        placeholder="Enter city..."
+                        value="Mumbai, India"
+                    />
+                </div>
+
+                <button 
+                    id="btn-calculate"
+                    class="w-full py-4 bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold rounded-xl shadow-lg shadow-indigo-500/30 hover:shadow-indigo-500/50 transform hover:-translate-y-1 transition-all duration-300"
+                >
+                    Find Auspicious Time
+                </button>
+            </div>
+        </div>
+
+        <!-- Error -->
+        <div id="error-box" class="hidden p-4 mb-6 bg-red-100 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-600 dark:text-red-300 rounded-xl text-center"></div>
+
+        <!-- Results -->
+        <div id="results-container" class="hidden space-y-6 animate-slide-up">
+            
+            <div class="glass p-6 rounded-2xl text-center shadow-md relative">
+                <h2 id="res-date" class="text-2xl font-bold text-slate-800 dark:text-white mb-1"></h2>
+                <p id="res-location" class="text-slate-500 dark:text-slate-400 mb-4"></p>
+                
+                <div class="flex justify-center space-x-4 sm:space-x-12 text-sm font-medium text-slate-600 dark:text-slate-300">
+                    
+                    <!-- Sunrise -->
+                    <div class="flex flex-col items-center min-w-[120px]">
+                        <div id="display-group-sunrise" class="flex items-center justify-center gap-2 transition-all">
+                            <span class="text-yellow-500 text-2xl">☀</span> 
+                            <span id="res-sunrise-display" class="text-lg"></span>
+                            <button onclick="toggleEdit('sunrise')" class="p-1 text-slate-400 hover:text-indigo-500 transition-colors rounded-full hover:bg-slate-100 dark:hover:bg-slate-700">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                                    <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
+                                </svg>
+                            </button>
+                        </div>
+                        <input type="time" id="input-sunrise" onchange="showRecalc()" class="hidden mt-1 p-2 bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-yellow-500 outline-none text-center w-32 font-mono text-base" />
+                        <!-- Edited Indicator (Local) -->
+                        <div id="indicator-sunrise-local" class="hidden text-[10px] leading-tight text-slate-500 dark:text-slate-400 mt-2 bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded border border-slate-200 dark:border-slate-700"></div>
+                    </div>
+
+                    <!-- Sunset -->
+                    <div class="flex flex-col items-center min-w-[120px]">
+                        <div id="display-group-sunset" class="flex items-center justify-center gap-2 transition-all">
+                            <span class="text-indigo-400 text-2xl">☾</span> 
+                            <span id="res-sunset-display" class="text-lg"></span>
+                            <button onclick="toggleEdit('sunset')" class="p-1 text-slate-400 hover:text-indigo-500 transition-colors rounded-full hover:bg-slate-100 dark:hover:bg-slate-700">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                                    <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
+                                </svg>
+                            </button>
+                        </div>
+                        <input type="time" id="input-sunset" onchange="showRecalc()" class="hidden mt-1 p-2 bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none text-center w-32 font-mono text-base" />
+                        <!-- Edited Indicator (Local) -->
+                        <div id="indicator-sunset-local" class="hidden text-[10px] leading-tight text-slate-500 dark:text-slate-400 mt-2 bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded border border-slate-200 dark:border-slate-700"></div>
+                    </div>
+
+                </div>
+
+                <!-- Central Edited Indicator (When only one changed) -->
+                <div id="indicator-center" class="hidden flex justify-center mt-4">
+                    <!-- Injected via JS -->
+                </div>
+
+                <!-- Recalculate Action -->
+                <div id="recalc-container" class="hidden mt-5 animate-fade-in">
+                    <button onclick="recalculateOverride()" class="mx-auto flex items-center px-5 py-2.5 bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold rounded-full shadow-lg hover:shadow-indigo-500/40 hover:scale-105 transition-all duration-300 text-sm">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2 animate-spin-slow" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="animation-duration: 3s;">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                        </svg>
+                        Recalculate with new time
+                    </button>
+                </div>
+            </div>
+
+            <div class="glass p-6 rounded-2xl shadow-xl">
+                <div class="flex items-center mb-6">
+                    <div id="res-icon"></div>
+                    <h3 id="res-title" class="text-2xl font-bold text-slate-800 dark:text-white"></h3>
+                </div>
+                
+                <div id="slots-grid" class="grid md:grid-cols-2 gap-4">
+                    <!-- Slots injected here -->
+                </div>
+            </div>
+
+            <div class="flex flex-wrap justify-center gap-4 text-sm text-slate-500 dark:text-slate-400 py-4">
+				<div class="flex items-center">
+					<span class="w-3 h-3 rounded-full bg-purple-400 mr-2"></span> Highly Auspicious
+				</div>
+				<div class="flex items-center">
+					<span class="w-3 h-3 rounded-full bg-green-300 mr-2"></span> Auspicious
+				</div>
+				<div class="flex items-center">
+					<span class="w-3 h-3 rounded-full bg-sky-300 mr-2"></span> Good
+				</div>
+				<div class="flex items-center">
+					<span class="w-3 h-3 rounded-full bg-gray-200 mr-2"></span> Neutral
+				</div>
+				<div class="flex items-center">
+					<span class="w-3 h-3 rounded-full bg-red-200 mr-2"></span> Inauspicious
+				</div>
+				<div class="flex items-center">
+					<span class="w-3 h-3 rounded-full bg-red-500 mr-2"></span> Highly Inauspicious
+				</div>
+            </div>
+        </div>
+
+    </main>
+
+	<footer class="mt-12 mb-6 text-center text-slate-400 text-xs">
+		<p>Made with ❤️...... But mostly 🧠</br>
+		<a href="https://www.PrithviSharma.com" class="text-slate-400 hover:underline">www.PrithviSharma.com</a></p>
+	</footer>
+
+
+    <script>
+        // --- Constants & Data ---
+		const DAY_TABLE = [
+			['Udveg', 'Chal', 'Labh', 'Amrit', 'Kaal', 'Shubh', 'Rog', 'Udveg'],
+			['Amrit', 'Kaal', 'Shubh', 'Chal', 'Udveg', 'Rog', 'Labh', 'Amrit'],
+			['Rog', 'Udveg', 'Chal', 'Labh', 'Amrit', 'Kaal', 'Shubh', 'Rog'],
+			['Labh', 'Amrit', 'Rog', 'Kaal', 'Shubh', 'Chal', 'Udveg', 'Labh'],
+			['Shubh', 'Rog', 'Kaal', 'Labh', 'Amrit', 'Udveg', 'Chal', 'Shubh'],
+			['Chal', 'Labh', 'Amrit', 'Shubh', 'Rog', 'Udveg', 'Kaal', 'Chal'],
+			['Kaal', 'Shubh', 'Rog', 'Udveg', 'Labh', 'Amrit', 'Chal', 'Kaal'],
+		];
+
+		const NIGHT_TABLE = [
+			['Shubh', 'Amrit', 'Chal', 'Rog', 'Kaal', 'Labh', 'Udveg', 'Shubh'],
+			['Chal', 'Rog', 'Kaal', 'Labh', 'Udveg', 'Shubh', 'Amrit', 'Chal'],
+			['Kaal', 'Labh', 'Udveg', 'Shubh', 'Amrit', 'Chal', 'Rog', 'Kaal'],
+			['Udveg', 'Shubh', 'Amrit', 'Chal', 'Rog', 'Kaal', 'Labh', 'Udveg'],
+			['Amrit', 'Chal', 'Rog', 'Kaal', 'Labh', 'Udveg', 'Shubh', 'Amrit'],
+			['Rog', 'Kaal', 'Labh', 'Udveg', 'Shubh', 'Amrit', 'Chal', 'Rog'],
+			['Labh', 'Udveg', 'Shubh', 'Amrit', 'Chal', 'Rog', 'Kaal', 'Labh'],
+		];
+
+        const MONTH_NAMES = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+        // --- State ---
+        const state = {
+            activity: 'General Time',
+            period: 'Day',
+            date: new Date(), // Holds Date Object
+            location: 'Mumbai, India',
+            darkMode: false,
+			solarData: null															   
+        };
+
+        // --- Helper Functions ---
+        const formatTime = (date) => date.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });
+        
+        const formatTimeInput = (date) => {
+            const h = String(date.getHours()).padStart(2, '0');
+            const m = String(date.getMinutes()).padStart(2, '0');
+            return `${h}:${m}`;
+        };
+
+        const parseTimeInput = (timeStr, refDate) => {
+            const [h, m] = timeStr.split(':').map(Number);
+            const d = new Date(refDate);
+            d.setHours(h, m, 0, 0);
+            return d;
+        };		   
+        const formatDateAPI = (date) => {
+            const y = date.getFullYear();
+            const m = String(date.getMonth() + 1).padStart(2, '0');
+            const d = String(date.getDate()).padStart(2, '0');
+            return `${y}-${m}-${d}`;
+        };
+
+const getChoghadiyaStyle = (name, activity) => {
+    const baseStyle = 'p-3 text-center rounded-xl font-semibold transition-all duration-300 flex items-center justify-center text-sm shadow-sm';
+	const textLight = 'text-white shadow-md shadow-gray-100/20'; // Smoother shadow with opacity
+	const textDark = 'text-slate-900 shadow-md shadow-gray-900/10'; // Added opacity for contrast
+	const neutralDark = 'dark:bg-slate-700 dark:text-slate-100'; // For Gray slots in dark mode
+
+	const map = {
+		Amrit: { 
+			'General Time': `bg-purple-500 dark:bg-purple-700/80 ${textLight}`, 
+			'Work Related': `bg-purple-500 dark:bg-purple-700/80 ${textLight}`, 
+			'Money Related': `bg-purple-500 dark:bg-purple-700/80 ${textLight}` 
+		},
+		Shubh: { 
+			'General Time': `bg-blue-400 dark:bg-blue-400/80 ${textLight}`,
+			'Work Related': `bg-green-400 dark:bg-green-500/80 ${textLight}`, 
+			'Money Related': `bg-blue-400 dark:bg-blue-400/80 ${textLight}`
+		},
+		Labh: { 
+			'General Time': `bg-blue-400 dark:bg-blue-400/80 ${textLight}`, 
+			'Work Related': `bg-blue-400 dark:bg-blue-400/80 ${textLight}`, 
+			'Money Related': `bg-green-400 dark:bg-green-500/80 ${textLight}` 
+		},
+		Chal: { 
+			'General Time': `bg-gray-400 dark:bg-gray-400/70 ${textLight}`,
+			'Work Related': `bg-gray-400 dark:bg-gray-400/70 ${textLight}`, 
+			'Money Related': `bg-gray-500 dark:bg-gray-400/70 ${textLight}` 
+		},
+		Udveg: { 'default': `bg-red-400 dark:bg-red-400/80 ${textLight}` },
+		Rog: { 'default': `bg-red-400 dark:bg-red-400/80 ${textLight}` },
+		Kaal: { 'default': `bg-red-500 dark:bg-red-600/80 ${textLight}` }
+	};
+
+    const config = map[name];
+    return `${baseStyle} ${config[activity] || config['default']}`;
+};
+
+        // --- Logic ---
+        async function calculate() {
+            const btn = document.getElementById('btn-calculate');
+            const errorBox = document.getElementById('error-box');
+            const resultsDiv = document.getElementById('results-container');
+            
+            btn.textContent = "Calculating...";
+            btn.disabled = true;
+            errorBox.classList.add('hidden');
+            resultsDiv.classList.add('hidden');
+
+            // Reset indicators
+            document.getElementById('indicator-sunrise-local').classList.add('hidden');
+            document.getElementById('indicator-sunset-local').classList.add('hidden');
+            document.getElementById('indicator-center').classList.add('hidden');
+
+			try {
+                // 1. Geocode
+                const geoRes = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(state.location)}&limit=1`);
+                const geoData = await geoRes.json();
+                if (!geoData.length) throw new Error('Location not found. Please try again!');
+                const { lat, lon, display_name } = geoData[0];
+
+				// 2. Solar Data
+				const dateStr = formatDateAPI(state.date);
+				const nextDate = new Date(state.date);
+				nextDate.setDate(state.date.getDate() + 1);
+				const nextDateStr = formatDateAPI(nextDate);
+
+				const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&daily=sunrise,sunset&timezone=auto&start_date=${dateStr}&end_date=${nextDateStr}`;
+				const solRes = await fetch(url);
+				const solData = await solRes.json();
+
+				let sunrise, sunset, nextSunrise;
+				if (!solData.daily || !solData.daily.sunrise || !solData.daily.sunset) {
+				  // Solar API missing data — keep the current lat/lon/display_name,
+				  // but fallback to fixed sunrise/sunset times (local date)
+				  const year = state.date.getFullYear();
+				  const month = state.date.getMonth(); // 0-based
+				  const day = state.date.getDate();
+				  sunrise = new Date(year, month, day, 6, 0, 0);
+				  sunset  = new Date(year, month, day, 18, 0, 0);
+
+				  // next sunrise is next day at 06:00
+				  nextSunrise = new Date(year, month, day + 1, 6, 0, 0);
+				} else {
+				  sunrise = new Date(solData.daily.sunrise[0]);
+				  sunset  = new Date(solData.daily.sunset[0]);
+
+				  if (solData.daily.sunrise.length > 1) {
+					nextSunrise = new Date(solData.daily.sunrise[1]);
+				  } else {
+					nextSunrise = new Date(sunrise);
+					nextSunrise.setDate(nextSunrise.getDate() + 1);
+				  }
+				}
+
+                // Store in state for override base
+                state.solarData = { sunrise, sunset, nextSunrise };
+
+                // Set Input Values
+                document.getElementById('input-sunrise').value = formatTimeInput(sunrise);
+                document.getElementById('input-sunset').value = formatTimeInput(sunset);
+                
+                // Reset Edit UI
+                resetEditUI();
+
+                // Render
+                document.getElementById('res-date').textContent = state.date.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+                document.getElementById('res-location').textContent = display_name;
+                
+                renderChoghadiya(sunrise, sunset);
+
+                resultsDiv.classList.remove('hidden');
+
+            } catch (err) {
+                errorBox.textContent = err.message;
+                errorBox.classList.remove('hidden');
+            } finally {
+                btn.textContent = "Find Auspicious Time";
+                btn.disabled = false;
+            }
+        }
+
+        function renderChoghadiya(sunrise, sunset) {
+			const nextSunrise = state.solarData && state.solarData.nextSunrise;
+			const isDay = state.period === 'Day';
+			const startTime = isDay ? sunrise : sunset;
+			const totalDuration = isDay ? (sunset - sunrise) : (nextSunrise - sunset);
+			const slotDuration = totalDuration / 8;
+			const dayIndex = state.date.getDay();
+			const table = isDay ? DAY_TABLE[dayIndex] : NIGHT_TABLE[dayIndex];
+
+			const slots = [];
+			for (let i = 0; i < 8; i++) {
+				const s = new Date(startTime.getTime() + (i * slotDuration));
+				const e = new Date(s.getTime() + slotDuration);
+				slots.push({ time: `${formatTime(s)} - ${formatTime(e)}`, name: table[i] });
+			}
+
+            // Update UI Times
+            document.getElementById('res-sunrise-display').textContent = formatTime(sunrise);
+            document.getElementById('res-sunset-display').textContent = formatTime(sunset);
+
+            // --- Handle Indicators Logic ---
+            const sunriseChanged = sunrise.getTime() !== state.solarData.sunrise.getTime();
+            const sunsetChanged = sunset.getTime() !== state.solarData.sunset.getTime();
+
+            // Helpers for HTML generation
+            const createLocalHtml = (orig, cust) => 
+                `<span class="block opacity-70">Original: ${formatTime(orig)}</span><span class="block font-semibold text-indigo-600 dark:text-indigo-400">Custom: ${formatTime(cust)}</span>`;
+            
+            const createCenterHtml = (label, orig, cust) => 
+                `<div class="bg-slate-100 dark:bg-slate-800 px-5 py-2 rounded-lg border border-slate-200 dark:border-slate-700 text-center shadow-sm">
+                    <div class="font-bold text-xs uppercase tracking-wide mb-1 text-indigo-500">${label} Modified</div>
+                    <div class="text-xs opacity-75 text-slate-600 dark:text-slate-400">Original: ${formatTime(orig)}</div>
+                    <div class="font-bold text-slate-800 dark:text-slate-100">Custom: ${formatTime(cust)}</div>
+                </div>`;
+
+            const sunLocEl = document.getElementById('indicator-sunrise-local');
+            const moonLocEl = document.getElementById('indicator-sunset-local');
+            const centerEl = document.getElementById('indicator-center');
+
+            // Reset all first
+            sunLocEl.classList.add('hidden');
+            moonLocEl.classList.add('hidden');
+            centerEl.classList.add('hidden');
+            centerEl.innerHTML = '';
+
+            if (sunriseChanged && sunsetChanged) {
+                // Both changed -> Show Local
+                sunLocEl.innerHTML = createLocalHtml(state.solarData.sunrise, sunrise);
+                sunLocEl.classList.remove('hidden');
+                moonLocEl.innerHTML = createLocalHtml(state.solarData.sunset, sunset);
+                moonLocEl.classList.remove('hidden');
+            } else if (sunriseChanged) {
+                // Only Sunrise -> Show Center
+                centerEl.innerHTML = createCenterHtml('Sunrise', state.solarData.sunrise, sunrise);
+                centerEl.classList.remove('hidden');
+            } else if (sunsetChanged) {
+                // Only Sunset -> Show Center
+                centerEl.innerHTML = createCenterHtml('Sunset', state.solarData.sunset, sunset);
+                centerEl.classList.remove('hidden');
+            }
+
+            // View Title
+            const iconSvg = isDay 
+                ? '<svg class="w-8 h-8 text-yellow-500 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" /></svg>'
+                : '<svg class="w-8 h-8 text-indigo-400 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" /></svg>';
+            
+            document.getElementById('res-icon').innerHTML = iconSvg;
+            document.getElementById('res-title').textContent = `${state.period} Choghadiya`;
+
+            const slotsGrid = document.getElementById('slots-grid');
+            slotsGrid.innerHTML = '';
+            slots.forEach(slot => {
+                const div = document.createElement('div');
+                div.className = 'flex items-center justify-between p-3 bg-slate-50/50 dark:bg-slate-800/50 rounded-xl';
+                div.innerHTML = `
+                    <span class="text-slate-600 dark:text-slate-300 font-medium text-sm">${slot.time}</span>
+                    <div class="w-32 ${getChoghadiyaStyle(slot.name, state.activity)}">${slot.name}</div>
+                `;
+                slotsGrid.appendChild(div);
+            });
+        }
+
+        // --- Edit Logic ---
+        window.toggleEdit = (type) => {
+            document.getElementById(`display-group-${type}`).classList.add('hidden');
+            const input = document.getElementById(`input-${type}`);
+            input.classList.remove('hidden');
+            input.focus();
+        };
+
+        window.showRecalc = () => {
+            document.getElementById('recalc-container').classList.remove('hidden');
+        };
+
+        window.recalculateOverride = () => {
+            const sunriseStr = document.getElementById('input-sunrise').value;
+            const sunsetStr = document.getElementById('input-sunset').value;
+
+            if(!sunriseStr || !sunsetStr) return;
+
+            const newSunrise = parseTimeInput(sunriseStr, state.date);
+            const newSunset = parseTimeInput(sunsetStr, state.date);
+            
+            // Update Display Groups back to visible
+            document.getElementById('input-sunrise').classList.add('hidden');
+            document.getElementById('display-group-sunrise').classList.remove('hidden');
+            document.getElementById('input-sunset').classList.add('hidden');
+            document.getElementById('display-group-sunset').classList.remove('hidden');
+            
+            document.getElementById('recalc-container').classList.add('hidden');
+
+            renderChoghadiya(newSunrise, newSunset);
+        };
+
+        function resetEditUI() {
+            document.getElementById('recalc-container').classList.add('hidden');
+            ['sunrise', 'sunset'].forEach(type => {
+                document.getElementById(`input-${type}`).classList.add('hidden');
+                document.getElementById(`display-group-${type}`).classList.remove('hidden');
+            });
+        }
+		
+        // --- Scroller Logic ---
+        function initScroller() {
+            const yearsCol = document.getElementById('scroll-year');
+            const monthsCol = document.getElementById('scroll-month');
+            const daysCol = document.getElementById('scroll-day');
+
+            // Populate Years
+            const currYear = new Date().getFullYear();
+            for (let y = currYear - 50; y <= currYear + 50; y++) {
+                const div = document.createElement('div');
+                div.className = 'scroller-item';
+                div.textContent = y;
+                yearsCol.appendChild(div);
+            }
+
+            // Populate Months
+            MONTH_NAMES.forEach(m => {
+                const div = document.createElement('div');
+                div.className = 'scroller-item';
+                div.textContent = m;
+                monthsCol.appendChild(div);
+            });
+
+            // Initial Scroll Positions (Current Date)
+            const today = new Date();
+            const scrollTo = (el, index) => { el.scrollTop = index * 50; };
+
+            // Setup Days dynamic population
+            const updateDays = () => {
+                const yIndex = Math.round(yearsCol.scrollTop / 50);
+                const mIndex = Math.round(monthsCol.scrollTop / 50);
+                
+                const yearVal = currYear - 50 + yIndex;
+                const monthVal = mIndex + 1; // 1-based
+                
+                const daysInMonth = new Date(yearVal, monthVal, 0).getDate();
+                
+                // Preserve current day selection index if possible
+                const currentScrollTop = daysCol.scrollTop;
+                
+                daysCol.innerHTML = '';
+                for (let d = 1; d <= daysInMonth; d++) {
+                    const div = document.createElement('div');
+                    div.className = 'scroller-item';
+                    div.textContent = d;
+                    daysCol.appendChild(div);
+                }
+                
+                // Restore scroll roughly or clamp
+                daysCol.scrollTop = currentScrollTop;
+                updateStateDate();
+            };
+
+            const updateStateDate = () => {
+                const yIndex = Math.round(yearsCol.scrollTop / 50);
+                const mIndex = Math.round(monthsCol.scrollTop / 50);
+                const dIndex = Math.round(daysCol.scrollTop / 50);
+
+                const yearVal = currYear - 50 + yIndex;
+                const dayVal = dIndex + 1; // 1-based
+
+                const newDate = new Date(yearVal, mIndex, dayVal);
+                state.date = newDate;
+            };
+
+            // Scroll Listeners with debounce/snap logic
+            const handleScroll = (el, callback) => {
+                let timeout;
+                el.addEventListener('scroll', () => {
+                    clearTimeout(timeout);
+                    timeout = setTimeout(() => {
+                        // Snap happens via CSS, just update logic here
+                        callback();
+                    }, 100);
+                });
+            };
+
+            // Init Days
+            updateDays();
+            
+            // Set Initial View to Today
+            scrollTo(yearsCol, 50); // Middle of 100 years
+            scrollTo(monthsCol, today.getMonth());
+            scrollTo(daysCol, today.getDate() - 1);
+            // Need to run updateDays again after scrolling to ensure correct day count
+            setTimeout(updateDays, 100);
+
+            handleScroll(yearsCol, updateDays);
+            handleScroll(monthsCol, updateDays);
+            handleScroll(daysCol, updateStateDate);
+        }
+
+        // --- UI Rendering ---
+        function updateUIToggles() {
+            // Activity
+            document.querySelectorAll('#activity-group button').forEach(btn => {
+                if (btn.dataset.val === state.activity) {
+                    btn.classList.add('toggle-selected');
+                    btn.classList.remove('text-slate-500', 'dark:text-slate-400');
+                } else {
+                    btn.classList.remove('toggle-selected');
+                    btn.classList.add('text-slate-500', 'dark:text-slate-400');
+                }
+            });
+
+            // Period
+            document.querySelectorAll('#period-group button').forEach(btn => {
+                if (btn.dataset.val === state.period) {
+                    btn.classList.add('toggle-selected');
+                    btn.classList.remove('text-slate-500', 'dark:text-slate-400');
+                } else {
+                    btn.classList.remove('toggle-selected');
+                    btn.classList.add('text-slate-500', 'dark:text-slate-400');
+                }
+            });
+        }
+
+        function toggleDarkMode(mode) {
+            state.darkMode = mode === 'dark';
+            const root = document.documentElement;
+            const sunBtn = document.getElementById('btn-sun');
+            const moonBtn = document.getElementById('btn-moon');
+
+            if (state.darkMode) {
+                root.classList.add('dark');
+                sunBtn.classList.remove('scale-110', 'opacity-100');
+                sunBtn.classList.add('scale-90', 'opacity-40');
+                moonBtn.classList.add('scale-110', 'drop-shadow-[0_0_15px_rgba(99,102,241,0.6)]', 'opacity-100');
+                moonBtn.classList.remove('scale-90', 'opacity-40');
+            } else {
+                root.classList.remove('dark');
+                sunBtn.classList.add('scale-110', 'drop-shadow-[0_0_15px_rgba(234,179,8,0.6)]', 'opacity-100');
+                sunBtn.classList.remove('scale-90', 'opacity-40');
+                moonBtn.classList.remove('scale-110', 'opacity-100');
+                moonBtn.classList.add('scale-90', 'opacity-40');
+            }
+        }
+
+        function initApp() {
+            // Load Screen
+            setTimeout(() => {
+                const splash = document.getElementById('splash-screen');
+                if(splash) {
+                    splash.classList.add('opacity-0', 'pointer-events-none');
+                    setTimeout(() => splash.remove(), 600); // Totally remove it
+                }
+                const main = document.getElementById('main-content');
+                if(main) main.classList.remove('opacity-0');
+            }, 2000);
+
+            // Inputs
+            const locInput = document.getElementById('input-location');
+            if(locInput) locInput.addEventListener('input', (e) => state.location = e.target.value);
+
+            // Toggles
+            document.querySelectorAll('.toggle-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const val = e.target.dataset.val;
+                    const parentId = e.target.parentElement.id;
+                    if (parentId === 'activity-group') state.activity = val;
+                    if (parentId === 'period-group') state.period = val;
+                    updateUIToggles();
+                });
+            });
+
+            // Calculate
+            const calcBtn = document.getElementById('btn-calculate');
+            if(calcBtn) calcBtn.addEventListener('click', calculate);
+
+            // Dark Mode
+            const sunBtn = document.getElementById('btn-sun');
+            const moonBtn = document.getElementById('btn-moon');
+            if(sunBtn) sunBtn.addEventListener('click', () => toggleDarkMode('light'));
+            if(moonBtn) moonBtn.addEventListener('click', () => toggleDarkMode('dark'));
+
+            // Init
+            initScroller();
+            updateUIToggles();
+            
+            // Initialize theme from DOM state (set by head script)
+            const initialTheme = document.documentElement.classList.contains('dark') ? 'dark' : 'light';
+            toggleDarkMode(initialTheme);
+        }
+
+        // Run Immediately
+        initApp();
+    </script>
+</body>
+</html>
