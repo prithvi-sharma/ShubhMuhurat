@@ -1,5 +1,5 @@
 # ShubhMuhurat
-[![Version Badge](https://img.shields.io/badge/Stable-v1.2-blue.svg)](https://ShubhMuhurat.PrithviSharma.com) [![Version Badge](https://img.shields.io/badge/Beta-v1.3.1-red.svg)](https://ShubhMuhurat.PrithviSharma.com/test.html) [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+[![Version Badge](https://img.shields.io/badge/Stable-v1.3.1-blue.svg)](https://ShubhMuhurat.PrithviSharma.com) [![Version Badge](https://img.shields.io/badge/Beta-v1.3.2-red.svg)](https://ShubhMuhurat.PrithviSharma.com/test.html) [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
 <img src="/assets/shubhmuhurat_readme.JPG" width="100%">
 
@@ -43,7 +43,7 @@ Notes:
 
 ## Update Ideas 💡
 1. <strong>Auto Light/Dark Mode</strong> : Auto-mode selection based on browser preference. <i>(Credit: Priyanka Sharma)</i><br>
-🔴Live v1.3.1 Beta - [test.html](https://ShubhMuhurat.PrithviSharma.com/test.html)
+🟢 Live [v1.3.1](https://ShubhMuhurat.PrithviSharma.com)
 2. <strong>Sunrise/Sunset Time Override</strong> : Allow manual sunrise/sunset override for special cases. <i>(Credit: Samarth Shahu)</i>
 3. <strong>Chart Image/PDF Download</strong> : Allows the user to download chart.
 4. <strong>Live Mahurat Visual</strong> : Shows which period is Live based on time. <i>(Credit: Priyanka Sharma)</i>
