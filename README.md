@@ -39,7 +39,8 @@ Notes:
 - Always remember, best time is when YOU start!
 
 ## Bugs 🐞
-1. Default year showing 2050 - 🟢Backtracked & Pacthed v1.2 
+1. Default year showing 2050 - 🟢Backtracked & Pacthed v1.2
+2. no sunRiseUI Found - 🟢 Patched v1.3.2 
 
 ## Update Ideas 💡
 1. <strong>Auto Light/Dark Mode</strong> : Auto-mode selection based on browser preference. <i>(Credit: Priyanka Sharma)</i><br>
@@ -48,6 +49,7 @@ Notes:
 🔴 Live [v1.3.2 Beta](https://ShubhMuhurat.PrithviSharma.com/test.html)
 3. <strong>Chart Image/PDF Download</strong> : Allows the user to download chart.
 4. <strong>Live Mahurat Visual</strong> : Shows which period is Live based on time. <i>(Credit: Priyanka Sharma)</i>
+5. <strong>Time Period Clickable Derails</strong> : Shows information about the period ehen clicked on it. <i>(Credit: Girish Sharma)</i>
 
 Let me know what you think — if you have any ideas for features, always keen : mail@prithvisharma.com
 
