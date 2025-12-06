@@ -49,7 +49,7 @@ Notes:
 🔴 Live [v1.3.2 Beta](https://ShubhMuhurat.PrithviSharma.com/test.html)
 3. <strong>Chart Image/PDF Download</strong> : Allows the user to download chart.
 4. <strong>Live Mahurat Visual</strong> : Shows which period is Live based on time. <i>(Credit: Priyanka Sharma)</i>
-5. <strong>Time Period Clickable Derails</strong> : Shows information about the period ehen clicked on it. <i>(Credit: Girish Sharma)</i>
+5. <strong>Time Period Clickable Details</strong> : Shows information about the period when clicked on it. <i>(Credit: Girish Sharma)</i>
 
 Let me know what you think — if you have any ideas for features, always keen : mail@prithvisharma.com
 
