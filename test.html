@@ -654,11 +654,11 @@ const getChoghadiyaStyle = (name, activity) => {
 
         window.exportResult = async (type) => {
             const resultsContainer = document.getElementById('results-container');
-            const footer = document.getElementById('app-footer');
-            
-            if (!resultsContainer || resultsContainer.classList.contains('hidden')) {
-                alert("Please calculate the time first!");
-                return;
+			const footer = document.getElementById('app-footer') || document.querySelector('footer');
+
+			if (!resultsContainer || resultsContainer.classList.contains('hidden')) {
+				alert("Please calculate the time first!");
+				return;
             }
 
             // Create a temp clone container
@@ -675,7 +675,8 @@ const getChoghadiyaStyle = (name, activity) => {
 
             // Clone content
             const resultsClone = resultsContainer.cloneNode(true);
-            const footerClone = footer.cloneNode(true);
+            //const footerClone = footer.cloneNode(true);
+			const footerClone = footer ? footer.cloneNode(true) : null;
 
             // Clean up Clone
             // Remove "Edit" buttons and hidden inputs
@@ -688,7 +689,7 @@ const getChoghadiyaStyle = (name, activity) => {
             if (state.darkMode) resultsClone.classList.add('text-slate-100');
 
             tempDiv.appendChild(resultsClone);
-            tempDiv.appendChild(footerClone);
+			if (footerClone) tempDiv.appendChild(footerClone);
             document.body.appendChild(tempDiv);
 
             try {
