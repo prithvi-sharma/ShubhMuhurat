@@ -1,5 +1,5 @@
 # ShubhMuhurat
-[![Version Badge](https://img.shields.io/badge/Stable-v1.4-blue.svg)](https://ShubhMuhurat.PrithviSharma.com) [![Version Badge](https://img.shields.io/badge/Beta-v1.4.1-red.svg)](https://ShubhMuhurat.PrithviSharma.com/test.html) [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+[![Version Badge](https://img.shields.io/badge/Stable-v1.4-blue.svg)](https://ShubhMuhurat.PrithviSharma.com) [![Version Badge](https://img.shields.io/badge/Beta-v1.4.2-red.svg)](https://ShubhMuhurat.PrithviSharma.com/test.html) [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
 <img src="/assets/shubhmuhurat_readme.JPG" width="100%">
 
@@ -48,7 +48,7 @@ Notes:
 2. <strong>Sunrise/Sunset Time Override</strong> : Allow manual sunrise/sunset override for special cases. <i>(Credit: Samarth Shahu)</i><br>
 🟢 Updated - v1.3.2
 3. <strong>Chart Image/PDF Download</strong> : Allows the user to download chart.<br>
-🔴 Testing - [v1.4.1 Beta](https://ShubhMuhurat.PrithviSharma.com/test.html)
+🔴 Testing - [v1.4.2 Beta](https://ShubhMuhurat.PrithviSharma.com/test.html)
 4. <strong>Live Mahurat Visual</strong> : Shows which period is Live based on time. <i>(Credit: Priyanka Sharma)</i>
 5. <strong>Time Period Clickable Details</strong> : Shows information about the period when clicked on it. <i>(Credit: Girish Sharma)</i>
 
